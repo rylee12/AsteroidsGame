@@ -1,4 +1,4 @@
-class Bullet extends Floater
+/*class Bullet extends Floater
 {
   public Bullet(Spaceship cheapStuff)
   {
@@ -6,6 +6,6 @@ class Bullet extends Floater
     myCenterY = cheapStuff.getY();
     myDirectionX = cheapStuff.getDirectionX();
     myDirectionY = cheapStuff.getDirectionY();
-    myPointDirection = double dRadians =myPointDirection*(Math.PI/180);
+    //myPointDirection = double dRadians =myPointDirection*(Math.PI/180);
   }
-}
+}*/
