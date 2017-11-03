@@ -6,6 +6,6 @@ class Bullet extends Floater
     myCenterY = cheapStuff.getY();
     myDirectionX = cheapStuff.getDirectionX();
     myDirectionY = cheapStuff.getDirectionY();
-    myPointDirection = cheapStuff.getPointDirection();
+    myPointDirection = double dRadians =myPointDirection*(Math.PI/180);
   }
 }

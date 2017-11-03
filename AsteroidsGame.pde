@@ -1,6 +1,7 @@
 Spaceship Xian;
 Stars [] ChairmanMao;
 ArrayList <Asteroid> regList;
+Asteroid [] Huan;
 boolean wIsPressed = false;
 boolean aIsPressed = false;
 boolean dIsPressed = false;
@@ -19,6 +20,11 @@ public void setup()
   {
     regList.add(new Asteroid());
   }
+  Huan = new Asteroid[50];
+  for (int i = 0; i < Huan.length; i++)
+  {
+    Huan[i] = new Asteroid();
+  }
 }
 public void draw() 
 {
@@ -26,6 +32,11 @@ public void draw()
   for (int i = 0; i < ChairmanMao.length; i++)
   {
     ChairmanMao[i].show();
+  }
+  for (int i = 0; i < Huan.length; i++)
+  {
+    Huan[i].show();
+    Huan[i].move();
   }
   for (int i = 0; i < regList.size(); i++)
   {
