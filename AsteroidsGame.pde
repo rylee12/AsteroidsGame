@@ -1,14 +1,15 @@
 Spaceship Xian;
 Stars [] ChairmanMao;
 ArrayList <Asteroid> regList;
-Asteroid [] Huan;
+ArrayList <Bullet> lolAd;
+//Asteroid [] Huan;
 boolean wIsPressed = false;
 boolean aIsPressed = false;
 boolean dIsPressed = false;
 boolean sIsPressed = false;
 public void setup() 
 {
-  size(1200, 900);
+  size(1150, 800);
   Xian = new Spaceship();
   ChairmanMao = new Stars[150];
   for (int i = 0; i < ChairmanMao.length; i++)
@@ -20,34 +21,50 @@ public void setup()
   {
     regList.add(new Asteroid());
   }
-  Huan = new Asteroid[50];
+  lolAd = new ArrayList <Bullet>();
+  /*Huan = new Asteroid[50];
   for (int i = 0; i < Huan.length; i++)
   {
     Huan[i] = new Asteroid();
-  }
+  }*/
 }
 public void draw() 
 {
   background(25);
-  for (int i = 0; i < ChairmanMao.length; i++)
+  for (int i = 0; i < ChairmanMao.length; i++) //stars
   {
     ChairmanMao[i].show();
   }
-  for (int i = 0; i < Huan.length; i++)
+  /*for (int i = 0; i < Huan.length; i++)
   {
     Huan[i].show();
     Huan[i].move();
-  }
-  for (int i = 0; i < regList.size(); i++)
+  }*/
+  for (int j = 0; j < regList.size(); j++)
   {
-    regList.get(i).move();
-    regList.get(i).show();
-  }
-  for (int i = 0; i < regList.size(); i++)
-  {
-    if (dist(regList.get(i).getX(), regList.get(i).getY(), Xian.getX(), Xian.getY()) < 26)
+    regList.get(j).move();
+    regList.get(j).show();
+    if (dist(regList.get(j).getX(), regList.get(j).getY(), Xian.getX(), Xian.getY()) < 26)
     {
-      regList.remove(i);
+      regList.remove(j);
+    }
+  }
+  for (int i = 0; i < lolAd.size(); i++)
+  {
+    lolAd.get(i).move();
+    lolAd.get(i).show();
+  }
+  for (int i = 0; i < lolAd.size(); i++)
+  {
+    for (int j = 0; j < regList.size(); j++)
+    {
+    if (dist(regList.get(j).getX(), regList.get(j).getY(), lolAd.get(i).getX(), lolAd.get(i).getX()) < 10)
+    {
+      regList.remove(j);
+      lolAd.remove(i);
+      j--;
+      i--;
+    }
     }
   }
   Xian.show();
@@ -114,4 +131,9 @@ void keyReleased()
   {
     sIsPressed = false;
   }
+}
+
+public void mousePressed()
+{
+  lolAd.add(new Bullet(Xian));
 }
