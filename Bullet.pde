@@ -1,5 +1,7 @@
 class Bullet extends Floater
 {
+  protected int tickCount;
+  protected boolean isGone;
   public Bullet(Spaceship cheapStuff)
   {
     myPointDirection = cheapStuff.getPointDirection();
