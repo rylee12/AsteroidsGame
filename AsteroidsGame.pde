@@ -2,6 +2,7 @@ Spaceship Xian;
 Stars [] ChairmanMao;
 ArrayList <Asteroid> regList;
 ArrayList <Bullet> lolAd;
+ArrayList <PowerUp> healthKit;
 //Asteroid [] Huan;
 //Keys
 boolean wIsPressed = false;
@@ -10,9 +11,10 @@ boolean dIsPressed = false;
 boolean sIsPressed = false;
 //Extras
 int shipHealth = 50;
-int tickCount = 0;
+int powerCount = 0;
 boolean gameOver = false;
 boolean takeDamage = true;
+
 public void setup() 
 {
   size(1050, 700);
@@ -28,67 +30,83 @@ public void setup()
     regList.add(new Asteroid());
   }
   lolAd = new ArrayList <Bullet>();
+  healthKit = new ArrayList <PowerUp>();
   /*Huan = new Asteroid[50];
   for (int i = 0; i < Huan.length; i++)
   {
     Huan[i] = new Asteroid();
   }*/
 }
+
 public void draw() 
 {
   background(25);
+  counter();
   for (int i = 0; i < lolAd.size(); i++)
   {
     lolAd.get(i).move();
     lolAd.get(i).show();
-    if (tickCount >= 95)
-    {
-      lolAd.remove(i);
-      tickCount = 0;
-    }
   }
+  
+  for (int k = 0; k < healthKit.size(); k++)
+  {
+    healthKit.get(k).move();
+    healthKit.get(k).show();
+  }
+  
   for (int a = 0; a < ChairmanMao.length; a++) //stars
   {
     ChairmanMao[a].show();
   }
 
+  for (int j = 0; j < regList.size(); j++)
+  {
+    regList.get(j).move();
+    regList.get(j).show();
+    if (dist(regList.get(j).getX(), regList.get(j).getY(), Xian.getX(), Xian.getY()) < 25)
+    {
+      regList.remove(j);
+      regList.add(new Asteroid());
+      if (takeDamage == true) {shipHealth = shipHealth - 10;}
+    }
+  }
+  
+  for (int j = 0; j < regList.size(); j++)
+  {
+    for (int i = 0; i < lolAd.size(); i++)
+    {
+      if (dist(regList.get(j).getX(), regList.get(j).getY(), lolAd.get(i).getX(), lolAd.get(i).getY()) <= 18)
+      {
+        regList.remove(j);
+        lolAd.remove(i);
+        regList.add(new Asteroid());
+        j--;
+        i--;
+        break;
+      }
+    }
+  }
+  //for (int k = 0; k < healthKit.size(); k++)
+  
+  textSize(16);
+  fill(100,150,150);
+  text("Health: " + shipHealth, 25, 40);
+  
+  Xian.show();
+  Xian.move();
+
+  if (wIsPressed == true) {Xian.accelerate(0.20);}
+  if (sIsPressed == true) {Xian.accelerate(-0.20);}
+  if (dIsPressed == true) {Xian.turn(12);}
+  else if (aIsPressed == true) {Xian.turn(-12);}
+  
   /*for (int i = 0; i < Huan.length; i++)
   {
     Huan[i].show();
     Huan[i].move();
   }*/
-  for (int j = 0; j < regList.size(); j++)
-  {
-    regList.get(j).move();
-    regList.get(j).show();
-    if (dist(regList.get(j).getX(), regList.get(j).getY(), Xian.getX(), Xian.getY()) < 26)
-    {
-      regList.remove(j);
-      if (takeDamage == true) {shipHealth = shipHealth - 10;}
-    }
-  }
-  for (int j = 0; j < regList.size(); j++)
-  {
-    for (int i = 0; i < lolAd.size(); i++)
-    {
-      if (dist(regList.get(j).getX(), regList.get(j).getY(), lolAd.get(i).getX(), lolAd.get(i).getX()) <= 19)
-    {
-      regList.remove(j);
-      lolAd.remove(i);
-      break;
-    }
-    }
-  }
-  if (shipHealth >= 0)
-  {
-    Xian.show();
-    Xian.move();
-  }
-  if (wIsPressed == true) {Xian.accelerate(0.20);}
-  if (sIsPressed == true) {Xian.accelerate(-0.20);}
-  if (dIsPressed == true) {Xian.turn(10);}
-  else if (aIsPressed == true) {Xian.turn(-10);}
 }
+
 public void keyPressed()
 {
   if (key == 'h')
@@ -120,7 +138,8 @@ public void keyPressed()
     sIsPressed = true;
   }
 }
-void keyReleased()
+
+public void keyReleased()
 {
   if (key == 'w')
   {
@@ -143,4 +162,14 @@ void keyReleased()
 public void mousePressed()
 {
   lolAd.add(new Bullet(Xian));
+}
+
+public void counter()
+{
+  powerCount++;
+  if (powerCount >= 10000)
+  {
+    healthKit.add(new PowerUp());
+    powerCount = 0;
+  }
 }
