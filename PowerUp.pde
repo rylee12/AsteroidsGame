@@ -3,8 +3,8 @@ public class PowerUp extends Floater
   public PowerUp()
   {
     corners = 4;
-    int[] xS = {6, -6, -6, 6};
-    int[] yS = {6, 6, -6, -6};
+    int[] xS = {8, -8, -8, 8};
+    int[] yS = {8, 8, -8, -8};
     xCorners = xS;
     yCorners = yS;
     myPointDirection = 0;

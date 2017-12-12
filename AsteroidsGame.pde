@@ -12,6 +12,8 @@ boolean sIsPressed = false;
 //Extras
 int shipHealth = 50;
 int powerCount = 0;
+int invinTimer = 240;
+int pressCount = 1;
 boolean gameOver = false;
 boolean takeDamage = true;
 
@@ -42,6 +44,7 @@ public void draw()
 {
   background(25);
   counter();
+  shipNodamage();
   for (int i = 0; i < lolAd.size(); i++)
   {
     lolAd.get(i).move();
@@ -52,6 +55,12 @@ public void draw()
   {
     healthKit.get(k).move();
     healthKit.get(k).show();
+    if (dist(healthKit.get(k).getX(), healthKit.get(k).getY(), Xian.getX(), Xian.getY()) <= 15)
+    {
+      healthKit.remove(k);
+      k--;
+      shipHealth = shipHealth + 5;
+    }
   }
   
   for (int a = 0; a < ChairmanMao.length; a++) //stars
@@ -63,7 +72,7 @@ public void draw()
   {
     regList.get(j).move();
     regList.get(j).show();
-    if (dist(regList.get(j).getX(), regList.get(j).getY(), Xian.getX(), Xian.getY()) < 25)
+    if (dist(regList.get(j).getX(), regList.get(j).getY(), Xian.getX(), Xian.getY()) < 24)
     {
       regList.remove(j);
       regList.add(new Asteroid());
@@ -80,25 +89,48 @@ public void draw()
         regList.remove(j);
         lolAd.remove(i);
         regList.add(new Asteroid());
-        j--;
         i--;
         break;
       }
     }
   }
-  //for (int k = 0; k < healthKit.size(); k++)
   
+  for (int k = 0; k < healthKit.size(); k++)
+  {
+    for (int i = 0; i < lolAd.size(); i++)
+    {
+      if (dist(healthKit.get(k).getX(), healthKit.get(k).getY(), lolAd.get(i).getX(), lolAd.get(i).getY()) < 11)
+      {
+        healthKit.remove(k);
+        lolAd.remove(i);
+        shipHealth = shipHealth + 5;
+        k--;
+        i--;
+        break;
+      }
+    }
+  }
+
   textSize(16);
   fill(100,150,150);
   text("Health: " + shipHealth, 25, 40);
   
-  Xian.show();
-  Xian.move();
+  if (gameOver == false)
+  {
+    Xian.show();
+    Xian.move();
+  }
+  
+  if (shipHealth <= 0)
+  {
+    gameOver = true;
+    shipHealth = 0;
+  }
 
-  if (wIsPressed == true) {Xian.accelerate(0.20);}
-  if (sIsPressed == true) {Xian.accelerate(-0.20);}
-  if (dIsPressed == true) {Xian.turn(12);}
-  else if (aIsPressed == true) {Xian.turn(-12);}
+  if (wIsPressed == true) {Xian.accelerate(0.15);}
+  if (sIsPressed == true) {Xian.accelerate(-0.15);}
+  if (dIsPressed == true) {Xian.turn(10);}
+  else if (aIsPressed == true) {Xian.turn(-10);}
   
   /*for (int i = 0; i < Huan.length; i++)
   {
@@ -117,9 +149,10 @@ public void keyPressed()
     Xian.setY((int)(Math.random()*750)+50);
     Xian.setPointDirection((int)(Math.random()*360));
   }
-  if (key == 'x')
+  if (key == 'x' && pressCount > 0)
   {
     takeDamage = false;
+    pressCount--;
   }
   if (key == 'w')
   {
@@ -167,9 +200,25 @@ public void mousePressed()
 public void counter()
 {
   powerCount++;
-  if (powerCount >= 10000)
+  if (powerCount >= 100)
   {
     healthKit.add(new PowerUp());
     powerCount = 0;
+  }
+}
+
+public void shipNodamage()
+{
+  if (takeDamage == false)
+  {
+    textSize(16);
+    fill(255, 255, 255);
+    text("Invulnerability Mode Activated", 25, 70);
+    invinTimer--;
+  }
+  if (invinTimer <= 0)
+  {
+    takeDamage = true;
+    invinTimer = 0;
   }
 }
