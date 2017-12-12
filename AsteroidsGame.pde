@@ -14,8 +14,10 @@ int shipHealth = 50;
 int powerCount = 0;
 int invinTimer = 240;
 int pressCount = 1;
+int pointSystem = 0;
 boolean gameOver = false;
 boolean takeDamage = true;
+boolean pointGain = true;
 
 public void setup() 
 {
@@ -76,6 +78,7 @@ public void draw()
     {
       regList.remove(j);
       regList.add(new Asteroid());
+      if (pointGain == true) {pointSystem = pointSystem + 10;}
       if (takeDamage == true) {shipHealth = shipHealth - 10;}
     }
   }
@@ -89,6 +92,7 @@ public void draw()
         regList.remove(j);
         lolAd.remove(i);
         regList.add(new Asteroid());
+        if (pointGain == true) {pointSystem = pointSystem + 10;}
         i--;
         break;
       }
@@ -112,8 +116,9 @@ public void draw()
   }
 
   textSize(16);
-  fill(100,150,150);
+  fill(255, 255, 255);
   text("Health: " + shipHealth, 25, 40);
+  text("Points: " + pointSystem, 950, 40);
   
   if (gameOver == false)
   {
@@ -125,6 +130,10 @@ public void draw()
   {
     gameOver = true;
     shipHealth = 0;
+    pointGain = false;
+    textSize(30);
+    text("Game Over", 450, 350);
+    text("Your score is "+ pointSystem, 425, 400);
   }
 
   if (wIsPressed == true) {Xian.accelerate(0.15);}
@@ -152,7 +161,7 @@ public void keyPressed()
   if (key == 'x' && pressCount > 0)
   {
     takeDamage = false;
-    pressCount--;
+    pressCount = 0;
   }
   if (key == 'w')
   {
@@ -200,7 +209,7 @@ public void mousePressed()
 public void counter()
 {
   powerCount++;
-  if (powerCount >= 100)
+  if (powerCount >= 2500)
   {
     healthKit.add(new PowerUp());
     powerCount = 0;
