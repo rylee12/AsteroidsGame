@@ -78,6 +78,7 @@ public void draw()
     {
       regList.remove(j);
       regList.add(new Asteroid());
+      j--;
       if (pointGain == true) {pointSystem = pointSystem + 10;}
       if (takeDamage == true) {shipHealth = shipHealth - 10;}
     }
@@ -94,6 +95,7 @@ public void draw()
         regList.add(new Asteroid());
         if (pointGain == true) {pointSystem = pointSystem + 10;}
         i--;
+        j--;
         break;
       }
     }
@@ -133,7 +135,7 @@ public void draw()
     pointGain = false;
     textSize(30);
     text("Game Over", 450, 350);
-    text("Your score is "+ pointSystem, 425, 400);
+    text("Your score is "+ pointSystem, 415, 400);
   }
 
   if (wIsPressed == true) {Xian.accelerate(0.15);}
@@ -209,7 +211,7 @@ public void mousePressed()
 public void counter()
 {
   powerCount++;
-  if (powerCount >= 2500)
+  if (powerCount >= 2000)
   {
     healthKit.add(new PowerUp());
     powerCount = 0;
