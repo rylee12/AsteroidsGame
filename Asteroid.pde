@@ -4,8 +4,8 @@ public class Asteroid extends Floater
   public Asteroid()
   {
     corners = 8;
-    int[] xS = {13, 8, 3, -4, -10, -4, 2, 5};
-    int[] yS = {1, -10, -14, -13, 0, 11, 9, 10};
+    int[] xS = {12, 7, 2, -3, -9, -3, 1, 4};
+    int[] yS = {0, -9, -13, -12, 0, 10, 8, 9};
     xCorners = xS;
     yCorners = yS;
     myColor = color(150);

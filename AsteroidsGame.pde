@@ -29,7 +29,7 @@ public void setup()
     ChairmanMao[a] = new Stars();
   }
   regList = new ArrayList <Asteroid>();
-  for (int j = 0; j < 30; j++)
+  for (int j = 0; j < 27; j++)
   {
     regList.add(new Asteroid());
   }
@@ -74,7 +74,7 @@ public void draw()
   {
     regList.get(j).move();
     regList.get(j).show();
-    if (dist(regList.get(j).getX(), regList.get(j).getY(), Xian.getX(), Xian.getY()) < 24)
+    if (dist(regList.get(j).getX(), regList.get(j).getY(), Xian.getX(), Xian.getY()) < 22)
     {
       regList.remove(j);
       regList.add(new Asteroid());
@@ -88,7 +88,7 @@ public void draw()
   {
     for (int i = 0; i < lolAd.size(); i++)
     {
-      if (dist(regList.get(j).getX(), regList.get(j).getY(), lolAd.get(i).getX(), lolAd.get(i).getY()) <= 18)
+      if (dist(regList.get(j).getX(), regList.get(j).getY(), lolAd.get(i).getX(), lolAd.get(i).getY()) < 17)
       {
         regList.remove(j);
         lolAd.remove(i);
@@ -109,7 +109,15 @@ public void draw()
       {
         healthKit.remove(k);
         lolAd.remove(i);
-        shipHealth = shipHealth + 5;
+        if (shipHealth < 101)
+        {
+          shipHealth = shipHealth + 10;
+          pointSystem = pointSystem + 10;
+        }
+        else
+        {
+          pointSystem = pointSystem + 20;
+        }
         k--;
         i--;
         break;
